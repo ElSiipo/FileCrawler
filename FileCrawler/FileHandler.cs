@@ -139,7 +139,7 @@ namespace FileCrawler
 
         /// <summary>
         /// Only Properties from here and downwards.
-        /// Some will hate me for this, "wrong order". :-)
+        /// Some will hate me for this "wrong order". :-)
         /// </summary>
 
         private string _sourcePath;
@@ -152,7 +152,7 @@ namespace FileCrawler
                 {
                     _sourcePath = value;
                     OnPropertyChanged();
-
+                    
                     GetFiles(_sourcePath);
                 }
             }
