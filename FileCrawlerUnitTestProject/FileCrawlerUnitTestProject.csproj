@@ -54,7 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WpfApplicationTest1\FileCrawler.csproj">
+    <ProjectReference Include="..\FileCrawler\FileCrawler.csproj">
       <Project>{C7CF81FF-83DC-4D04-A1FA-888DB6F23ABA}</Project>
       <Name>FileCrawler</Name>
     </ProjectReference>
