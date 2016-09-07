@@ -258,3 +258,8 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/FileCrawler/Properties
+/FileCrawler/App.config
+/FileCrawler/App.xaml
+/FileCrawler/App.xaml.cs
+/FileCrawler/packages.config
