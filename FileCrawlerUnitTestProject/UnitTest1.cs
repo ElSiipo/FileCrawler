@@ -15,6 +15,7 @@ namespace FileCrawlerUnitTestProject
             Assert.AreEqual(true, fh.ListOfFiles != null);
         }
 
+
         [TestMethod]
         public void FileListNotContainingOtherThanMovieFormat()
         {
@@ -26,6 +27,17 @@ namespace FileCrawlerUnitTestProject
                                      .Where(p => !p.FileName.Any(d => p.FileName.EndsWith(".avi"))).ToList();
 
             Assert.AreEqual(true, test.Count() <= 0);
+        }
+
+
+        [TestMethod]
+        public void TestEmptyFileCreation()
+        {
+            File f = new File();
+            Assert.AreEqual(true, f.FileName == "" && 
+                                  f.FilePath == "" && 
+                                  f.FileSize == 0 && 
+                                  f.FileCategory == null);
         }
     }
 }

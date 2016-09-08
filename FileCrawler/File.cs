@@ -9,11 +9,17 @@ namespace FileCrawler
     public class File
     {
 
-        public File(string filename, string filepath, double fileSize)
+        public File() : this("", "", 0, null)
+        {
+
+        }
+
+        public File(string filename, string filepath, double fileSize, string fileCategory = null)
         {
             this.FileName = filename;
             this.FilePath = filepath;
             this.FileSize = fileSize;
+            this.FileCategory = fileCategory;
         }
 
 

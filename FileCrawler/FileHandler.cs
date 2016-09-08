@@ -35,7 +35,7 @@ namespace FileCrawler
                             if (file.EndsWith(".mkv") || file.EndsWith(".mp4") || file.EndsWith(".avi"))
                             {
                                 // Handle filepath too long!
-                                if (file.Length < 240)
+                                if (file.Length < 250)
                                 {
                                     var fileInfos = new FileInfo(file);
 
