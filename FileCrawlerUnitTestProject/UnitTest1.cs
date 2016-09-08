@@ -22,9 +22,10 @@ namespace FileCrawlerUnitTestProject
             FileHandler fh = new FileHandler();
             fh.SourcePath = @"D:\FILM";
 
-            var test = fh.ListOfFiles.Where(p => !p.FileName.Any(d => p.FileName.EndsWith(".mov")))
-                                     .Where(p => !p.FileName.Any(d => p.FileName.EndsWith(".mp4")))
-                                     .Where(p => !p.FileName.Any(d => p.FileName.EndsWith(".avi"))).ToList();
+            var test = fh.ListOfFiles.Where(p => !p.FileName.Any(d => p.FileName.EndsWith(".mov") ||
+                                                                      p.FileName.EndsWith(".mp4") ||
+                                                                      p.FileName.EndsWith(".mkv") ||
+                                                                      p.FileName.EndsWith(".avi"))).ToList();
 
             Assert.AreEqual(true, test.Count() <= 0);
         }

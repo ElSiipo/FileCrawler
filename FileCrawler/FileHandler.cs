@@ -32,7 +32,7 @@ namespace FileCrawler
 
                         foreach (string file in Directory.GetFiles(directory))
                         {
-                            if (file.EndsWith(".mkv") || file.EndsWith(".mp4") || file.EndsWith(".avi"))
+                            if (file.EndsWith(".avi") || file.EndsWith(".mkv") || file.EndsWith(".mp4") || file.EndsWith(".mov"))
                             {
                                 // Handle filepath too long!
                                 if (file.Length < 250)
