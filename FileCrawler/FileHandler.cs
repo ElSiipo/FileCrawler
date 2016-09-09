@@ -8,6 +8,15 @@ using System.Threading.Tasks;
 
 namespace FileCrawler
 {
+    //enum FileType
+    //{
+    //    not_specified = 0,
+    //    movie = 1,
+    //    audio = 2,
+    //    executable = 3,
+    //}
+
+
     public class FileHandler
     {
         public FileHandler()
@@ -272,6 +281,19 @@ namespace FileCrawler
             }
         }
 
+        private bool _currentOption;
+        public bool CurrentOption
+        {
+            get { return _currentOption; }
+            set
+            {
+                if (_currentOption != value)
+                {
+                    _currentOption = value;
+                }
+            }
+        }
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

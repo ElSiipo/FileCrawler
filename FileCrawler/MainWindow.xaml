@@ -7,9 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
 
+    <Window.Resources>
+        <local:EnumMatchToBooleanConverter x:Key="enumConverter" />
+    </Window.Resources>
+
+    
     <Grid>
         <Grid.RowDefinitions>
-            <!--<RowDefinition/>-->
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -18,21 +22,83 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Height="30" VerticalAlignment="Top" >
+
+        <GroupBox Grid.Row="0" Header="Filetypes" Margin="5">
+            <StackPanel Margin="5">
+                <RadioButton Content="video" GroupName="video" IsChecked="{Binding Path=CurrentOption, Mode=TwoWay, 
+                                                                                       Converter={StaticResource enumConverter}, ConverterParameter=video}"/>
+
+                <RadioButton GroupName="audio" Content="audio" IsChecked="{Binding Path=CurrentOption, Mode=TwoWay, 
+                                                                                       Converter={StaticResource enumConverter}, ConverterParameter=audio}"/>
+
+                <RadioButton GroupName="executable" Content=".exe" IsChecked="{Binding Path=CurrentOption, Mode=TwoWay, 
+                                                                                       Converter={StaticResource enumConverter}, ConverterParameter=executable}"/>
+
+                <RadioButton GroupName="none" Content="not specified" IsChecked="{Binding Path=CurrentOption, Mode=TwoWay, 
+                                                                                       Converter={StaticResource enumConverter}, ConverterParameter=none}"/>
+            </StackPanel>
+        </GroupBox>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Height="30" VerticalAlignment="Top" >
             <Label Content="Number of files: " />
             <Label Content="{Binding NumberOfFiles, Mode=OneWay}"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" >
+        <StackPanel Grid.Row="2" Orientation="Horizontal" >
             <Label Content="Files processed: " />
             <Label Content="{Binding FilesProcessedToZip, Mode=OneWay}"/>
         </StackPanel>
 
-        <Label Grid.Row="3" HorizontalAlignment="Left" Width="350" Margin="5,0,5,0"
-               Content="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+        <TextBox Grid.Row="3" Text="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+            <TextBox.Style>
+                <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label Content="Specify source path..." Foreground="LightGray" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
 
-        <Label Grid.Row="4" HorizontalAlignment="Left" Width="350" Margin="5,0,5,0"
-               Content="{Binding DestinationPath, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+        <TextBox Grid.Row="4" Text="{Binding DestinationPath, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+            <TextBox.Style>
+                <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label Content="Specify destination path..." Foreground="LightGray" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        
 
         <Button Grid.Row="3" Content="Source" Width="70" Height="20" Margin="5" HorizontalAlignment="Right" Click="SourceButton_Click"/>
         <Button Grid.Row="4" Content="Destination" Width="70" Height="20" Margin="5" HorizontalAlignment="Right" Click="DestinationButton_Click"/>
