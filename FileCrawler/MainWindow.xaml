@@ -25,17 +25,21 @@
 
         <GroupBox Grid.Row="0" Header="Filetypes" Margin="5">
             <StackPanel Margin="5">
-                <RadioButton Content="video" GroupName="video" IsChecked="{Binding Path=CurrentOption, Mode=TwoWay, 
-                                                                                       Converter={StaticResource enumConverter}, ConverterParameter=video}"/>
+                <RadioButton Content="video" 
+                             GroupName="video" 
+                             IsChecked="{Binding Path=fileTypeEnum, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=video}"/>
 
-                <RadioButton GroupName="audio" Content="audio" IsChecked="{Binding Path=CurrentOption, Mode=TwoWay, 
-                                                                                       Converter={StaticResource enumConverter}, ConverterParameter=audio}"/>
+                <RadioButton GroupName="audio" 
+                             Content="audio" 
+                             IsChecked="{Binding Path=fileTypeEnum, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=audio}"/>
 
-                <RadioButton GroupName="executable" Content=".exe" IsChecked="{Binding Path=CurrentOption, Mode=TwoWay, 
-                                                                                       Converter={StaticResource enumConverter}, ConverterParameter=executable}"/>
+                <RadioButton GroupName="executable" 
+                             Content=".exe" 
+                             IsChecked="{Binding Path=fileTypeEnum, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=executable}"/>
 
-                <RadioButton GroupName="none" Content="not specified" IsChecked="{Binding Path=CurrentOption, Mode=TwoWay, 
-                                                                                       Converter={StaticResource enumConverter}, ConverterParameter=none}"/>
+                <RadioButton GroupName="none" 
+                             Content="not specified" 
+                             IsChecked="{Binding Path=fileTypeEnum, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=not_specified}"/>
             </StackPanel>
         </GroupBox>
 

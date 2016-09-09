@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -41,9 +42,9 @@ namespace FileCrawler
 
                         foreach (string file in Directory.GetFiles(directory))
                         {
-                            if (file.EndsWith(".avi") || file.EndsWith(".mkv") || file.EndsWith(".mp4") || file.EndsWith(".mov"))
+                            if (AcceptedFileTypes.Any(file.Contains))
                             {
-                                // Handle filepath too long!
+                                // Handle filepath too long! (And no, this is not the right way to do it. :))
                                 if (file.Length < 250)
                                 {
                                     var fileInfos = new FileInfo(file);
@@ -75,7 +76,7 @@ namespace FileCrawler
             {
                 foreach (string file in Directory.GetFiles(value))
                 {
-                    if (file.EndsWith(".mkv") || file.EndsWith(".mp4") || file.EndsWith(".avi"))
+                    if (AcceptedFileTypes.Any(file.Contains))
                     {
                         var fileInfos = new FileInfo(file);
 
@@ -150,6 +151,29 @@ namespace FileCrawler
         /// Only Properties from here and downwards.
         /// Some will hate me for this "wrong order". :-)
         /// </summary>
+        
+        
+        private List<string> AcceptedFileTypes
+        {
+            get
+            {
+                switch (fileTypeEnum)
+                {
+                    case FileTypeEnum.audio:
+                        return new List<string>() { ".mp3", };
+
+                    case FileTypeEnum.video:
+                        return new List<string>() { ".avi", ".mov", ".mkv", ".mp4" };
+
+                    case FileTypeEnum.executable:
+                        return new List<string>() { ".exe" };
+
+                    case FileTypeEnum.not_specified:
+                    default:
+                        return new List<string>() { "" };
+                }
+            }
+        }
 
         private string _sourcePath;
         public string SourcePath
@@ -281,18 +305,22 @@ namespace FileCrawler
             }
         }
 
-        private bool _currentOption;
-        public bool CurrentOption
-        {
-            get { return _currentOption; }
-            set
-            {
-                if (_currentOption != value)
-                {
-                    _currentOption = value;
-                }
-            }
-        }
+
+        public FileTypeEnum fileTypeEnum { get; set; }
+
+
+        //private bool _currentOption;
+        //public bool CurrentOption
+        //{
+        //    get { return _currentOption; }
+        //    set
+        //    {
+        //        if (_currentOption != value)
+        //        {
+        //            _currentOption = value;
+        //        }
+        //    }
+        //}
         
 
         public event PropertyChangedEventHandler PropertyChanged;

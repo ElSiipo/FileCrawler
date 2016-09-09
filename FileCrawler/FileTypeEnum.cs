@@ -9,7 +9,7 @@ namespace FileCrawler
     public enum FileTypeEnum
     {
         not_specified,
-        movie,
+        video,
         audio,
         executable,
     };

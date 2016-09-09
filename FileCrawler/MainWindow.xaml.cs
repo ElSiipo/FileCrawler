@@ -13,17 +13,10 @@ namespace FileCrawler
 
         public MainWindow()
         {
-            //var _startingPoint = @"D:\FILM";
-
             InitializeComponent();
             fileHandler = new FileHandler();
 
             DataContext = fileHandler;
-
-            //if (Directory.Exists(_startingPoint))
-            //{
-            //    fileHandler.SourcePath = _startingPoint;
-            //}
         }
 
         private void SourceButton_Click(object sender, RoutedEventArgs e)
