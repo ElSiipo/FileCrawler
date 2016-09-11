@@ -40,5 +40,17 @@ namespace FileCrawlerUnitTestProject
                                   f.FileSize == 0 && 
                                   f.FileCategory == null);
         }
+
+        [TestMethod]
+        public void TestZippingFiles()
+        {
+            FileHandler fh = new FileHandler();
+            fh.SourcePath = @"C:\Users\Chrille\Downloads";
+            fh.BeginProcessFiles();
+
+            System.Threading.Thread.Sleep(5000);
+
+            Assert.AreEqual(true, fh.FilesProcessedToZip > 0);
+        }
     }
 }

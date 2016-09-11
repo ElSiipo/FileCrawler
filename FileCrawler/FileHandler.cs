@@ -9,29 +9,19 @@ using System.Threading.Tasks;
 
 namespace FileCrawler
 {
-    //enum FileType
-    //{
-    //    not_specified = 0,
-    //    movie = 1,
-    //    audio = 2,
-    //    executable = 3,
-    //}
-
-
     public class FileHandler
     {
         public FileHandler()
         {
             _listOfFiles = new List<File>();
         }
-
-
+        
 
         private void GetFiles(string value)
         {
-            foreach (string directory in Directory.GetDirectories(value))
+            try
             {
-                try
+                foreach (string directory in Directory.GetDirectories(value))
                 {
                     if ((new DirectoryInfo(directory).Attributes & FileAttributes.Hidden) == 0)
                     {
@@ -49,7 +39,7 @@ namespace FileCrawler
                                 {
                                     var fileInfos = new FileInfo(file);
 
-                                    ListOfFiles.Add(new File(fileInfos.Name, fileInfos.DirectoryName, fileInfos.Length));
+                                    ListOfFiles.Add(new File(fileInfos.Name, fileInfos.DirectoryName, fileInfos.Length, fileTypeEnum.ToString()));
                                     NumberOfFiles += 1;
                                 }
 
@@ -64,26 +54,29 @@ namespace FileCrawler
                         }
                     }
                 }
-                catch (UnauthorizedAccessException)
+
+
+                // Leaf-folder
+                if (NumberOfFiles == 0)
                 {
-                    // Make a logger instead?
-                    UnauthorizedFiles += 1;
-                    Console.WriteLine("\n\n\nUnauthorized: " + UnauthorizedFiles + "\nFiles scanned: " + FilesScanned + "\nMovie-files found: " + NumberOfFiles);
+                    foreach (string file in Directory.GetFiles(value))
+                    {
+                        if (AcceptedFileTypes.Any(file.Contains))
+                        {
+                            var fileInfos = new FileInfo(file);
+
+                            ListOfFiles.Add(new File(fileInfos.Name, fileInfos.DirectoryName, fileInfos.Length, fileTypeEnum.ToString()));
+                            NumberOfFiles += 1;
+                        }
+                    }
                 }
             }
 
-            if (NumberOfFiles == 0)
+            catch (UnauthorizedAccessException)
             {
-                foreach (string file in Directory.GetFiles(value))
-                {
-                    if (AcceptedFileTypes.Any(file.Contains))
-                    {
-                        var fileInfos = new FileInfo(file);
-
-                        ListOfFiles.Add(new File(fileInfos.Name, fileInfos.DirectoryName, fileInfos.Length));
-                        NumberOfFiles += 1;
-                    }
-                }
+                // Make a logger instead?
+                UnauthorizedFiles += 1;
+                Console.WriteLine("\n\n\nUnauthorized: " + UnauthorizedFiles + "\nFiles scanned: " + FilesScanned + "\nMovie-files found: " + NumberOfFiles);
             }
         }
 
@@ -100,7 +93,7 @@ namespace FileCrawler
             // Make the magic happen!
             // Hold your horses, not quite yet...
 
-            //ProcessFiles(ListOfFiles);
+            ProcessFiles(ListOfFiles);
         }
 
 

@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
 
-    <Window.Resources>
+    <!--<Window.Resources>
         <local:EnumMatchToBooleanConverter x:Key="enumConverter" />
-    </Window.Resources>
+    </Window.Resources>-->
 
     
     <Grid>
@@ -22,38 +22,30 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
+        <GroupBox>
+            <StackPanel>
+                <StackPanel.Resources>
+                    <local:EnumMatchToBooleanConverter x:Key="EnumToBooleanConverter" />
+                </StackPanel.Resources>
 
-        <GroupBox Grid.Row="0" Header="Filetypes" Margin="5">
-            <StackPanel Margin="5">
-                <RadioButton Content="video" 
-                             GroupName="video" 
-                             IsChecked="{Binding Path=fileTypeEnum, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=video}"/>
-
-                <RadioButton GroupName="audio" 
-                             Content="audio" 
-                             IsChecked="{Binding Path=fileTypeEnum, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=audio}"/>
-
-                <RadioButton GroupName="executable" 
-                             Content=".exe" 
-                             IsChecked="{Binding Path=fileTypeEnum, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=executable}"/>
-
-                <RadioButton GroupName="none" 
-                             Content="not specified" 
-                             IsChecked="{Binding Path=fileTypeEnum, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=not_specified}"/>
+                <RadioButton Content="video" IsChecked="{Binding Path=fileTypeEnum, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static local:FileTypeEnum.video}}" />
+                <RadioButton Content="audio" IsChecked="{Binding Path=fileTypeEnum, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static local:FileTypeEnum.audio}}" />
+                <RadioButton Content=".exe" IsChecked="{Binding Path=fileTypeEnum, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static local:FileTypeEnum.executable}}" />
+                <RadioButton Content="none" IsChecked="{Binding Path=fileTypeEnum, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static local:FileTypeEnum.not_specified}}" />
             </StackPanel>
         </GroupBox>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Height="30" VerticalAlignment="Top" >
             <Label Content="Number of files: " />
-            <Label Content="{Binding NumberOfFiles, Mode=OneWay}"/>
+            <Label Content="{Binding NumberOfFiles, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
-
+        
         <StackPanel Grid.Row="2" Orientation="Horizontal" >
             <Label Content="Files processed: " />
             <Label Content="{Binding FilesProcessedToZip, Mode=OneWay}"/>
         </StackPanel>
 
-        <TextBox Grid.Row="3" Text="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+        <TextBox Grid.Row="3" Text="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged}">
             <TextBox.Style>
                 <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                     <Style.Resources>

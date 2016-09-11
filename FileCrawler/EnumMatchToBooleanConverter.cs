@@ -8,25 +8,18 @@ using System.Windows.Data;
 
 namespace FileCrawler
 {
-    enum FileType
-    {
-        not_specified,
-        movie,
-        audio,
-        executable,
-    };
-
     public class EnumMatchToBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType,object parameter, CultureInfo culture)
         {
-            if (value == null || parameter == null)
-                return false;
+            //if (value == null || parameter == null)
+            //    return false;
 
-            string checkValue = value.ToString();
-            string targetValue = parameter.ToString();
+            //string checkValue = value.ToString();
+            //string targetValue = parameter.ToString();
+            //return checkValue.Equals(targetValue, StringComparison.InvariantCultureIgnoreCase);
 
-            return checkValue.Equals(targetValue, StringComparison.InvariantCultureIgnoreCase);
+            return value.Equals(parameter);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -36,7 +29,6 @@ namespace FileCrawler
 
             bool useValue = (bool)value;
             string targetValue = parameter.ToString();
-            
 
             if (useValue)
                 return Enum.Parse(targetType, targetValue);
