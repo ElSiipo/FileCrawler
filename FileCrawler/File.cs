@@ -49,6 +49,14 @@ namespace FileCrawler
             }
         }
 
+        public string FullFilePathAndName
+        {
+            get
+            {
+                return FilePath + "\\" + FileName;
+            }
+        }
+
         private double _fileSize;
         public double FileSize
         {
@@ -70,8 +78,7 @@ namespace FileCrawler
             }
         }
 
-
-        // Not in use as of now, will add functionality for this later
+        
         private string _fileCategory;
         public string FileCategory
         {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FileCrawler
 {
-    public class FileHandler
+    public class FileHandler : INotifyPropertyChanged
     {
         public FileHandler()
         {
@@ -39,7 +39,7 @@ namespace FileCrawler
                                 {
                                     var fileInfos = new FileInfo(file);
 
-                                    ListOfFiles.Add(new File(fileInfos.Name, fileInfos.DirectoryName, fileInfos.Length, fileTypeEnum.ToString()));
+                                    ListOfFiles.Add(new File(fileInfos.Name, fileInfos.DirectoryName, fileInfos.Length, _fileTypeEnum.ToString()));
                                     NumberOfFiles += 1;
                                 }
 
@@ -65,7 +65,7 @@ namespace FileCrawler
                         {
                             var fileInfos = new FileInfo(file);
 
-                            ListOfFiles.Add(new File(fileInfos.Name, fileInfos.DirectoryName, fileInfos.Length, fileTypeEnum.ToString()));
+                            ListOfFiles.Add(new File(fileInfos.Name, fileInfos.DirectoryName, fileInfos.Length, _fileTypeEnum.ToString()));
                             NumberOfFiles += 1;
                         }
                     }
@@ -113,12 +113,13 @@ namespace FileCrawler
             {
                 try
                 {
+                    // Swap out to the C#.NET version of Zip, third party works.. but in mysterious ways.
                     using (var zipFile = new ZipFile())
                     {
                         // add content to zip here 
                         foreach (File file in fileList)
                         {
-                            zipFile.AddFile(file.FilePath);
+                            zipFile.AddFile(file.FullFilePathAndName);
                         }
 
                         zipFile.SaveProgress +=
@@ -150,7 +151,7 @@ namespace FileCrawler
         {
             get
             {
-                switch (fileTypeEnum)
+                switch (_fileTypeEnum)
                 {
                     case FileTypeEnum.audio:
                         return new List<string>() { ".mp3", };
@@ -299,7 +300,19 @@ namespace FileCrawler
         }
 
 
-        public FileTypeEnum fileTypeEnum { get; set; }
+        private FileTypeEnum _fileTypeEnum;
+        public FileTypeEnum FileTypeEnum
+        {
+            get { return _fileTypeEnum; }
+            set
+            {
+                if (_fileTypeEnum != value)
+                {
+                    _fileTypeEnum = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
 
         //private bool _currentOption;
